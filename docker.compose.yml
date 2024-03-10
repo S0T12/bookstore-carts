@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  cart-service:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+    networks:
+      - backend
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_DATABASE=cart
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - '5672:5672'
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  mongodb_data:
